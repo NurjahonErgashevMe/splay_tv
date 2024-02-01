@@ -1,0 +1,43 @@
+.button {
+  width: auto;
+  border-radius: 6.25rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.0625rem;
+  transition: var(--default-transiton);
+  border: none;
+  cursor: pointer;
+  padding: 18px 32px 18px 32px;
+}
+
+.black {
+  background-color: var(--black);
+}
+
+.disabled {
+  color: var(--disable-text);
+}
+
+.dark {
+  background-color: var(--dark-grey-table-normal);
+  &:hover {
+    background-color: var(--seconadary-dark-grey);
+  }
+}
+
+.orange {
+  background-color: var(--primary-orange-button);
+  &:hover {
+    background-color: var(--primary-orange-button-hover);
+  }
+}
+
+.glass {
+  background-color: rgba(255, 255, 255, 0.15);
+  &:hover {
+    background-color: var(--light-text);
+  }
+}
+.focused{
+  background-color: blue;
+}

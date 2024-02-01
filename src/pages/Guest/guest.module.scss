@@ -1,0 +1,90 @@
+@import "/src/styles/breakpoints";
+
+.guest {
+  height: 100%;
+  .videoWrapper {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    .video {
+      min-width: 100%;
+      min-height: 100%;
+    }
+  }
+  .container {
+    width: 70%;
+    height: auto;
+    margin: 0 auto;
+    color: #fff;
+    max-width: 1440px;
+    .logoWrapper {
+      padding: 0.625rem 0.938rem;
+      top: 1.25rem;
+    }
+    .content {
+      text-align: center;
+      min-height: 80lvh;
+      gap: 1.25rem;
+      .headingText {
+        font-size: 3rem;
+        font-weight: 600;
+        line-height: 4.063rem;
+      }
+      .subtitleText {
+        max-width: 80%;
+        font-size: 1.125rem;
+        margin-bottom: 1.25rem;
+        font-weight: 300;
+        line-height: 1.875rem;
+      }
+      .button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        // max-width: 100%;
+      }
+      // @include breakpoint("md") {
+      //   .headingText {
+      //     font-size: 4rem;
+      //     line-height: 5rem;
+      //   }
+      //   .subtitleText {
+      //     font-size: 2rem;
+      //     line-height: 2.5rem;
+      //   }
+      //   .button {
+      //     width: 40%;
+      //     font-size: 1.8rem;
+      //     padding: 1rem;
+      //     .playIcon {
+      //       width: 2rem;
+      //       height: 2rem;
+      //     }
+      //   }
+      // }
+      // @include breakpoint("lg") {
+      //   .headingText {
+      //     font-size: 5rem;
+      //     line-height: 7rem;
+      //   }
+      //   .subtitleText {
+      //     font-size: 3rem;
+      //     line-height: 3rem;
+      //   }
+      //   .button {
+      //     width: 40%;
+      //     font-size: 1.8rem;
+      //     padding: 1rem;
+      //     .playIcon {
+      //       width: 2rem;
+      //       height: 2rem;
+      //     }
+      //   }
+      // }
+    }
+  }
+}
