@@ -8,4 +8,7 @@
   width: 70px !important;
   padding: 0.25rem !important;
   height: 70px;
+  &.focused{
+    background-color: var(--light);
+  }
 }

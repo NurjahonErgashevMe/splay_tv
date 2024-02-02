@@ -6,7 +6,6 @@
   line-height: 1.0625rem;
   transition: var(--default-transiton);
   border: none;
-  cursor: pointer;
   padding: 18px 32px 18px 32px;
 }
 
@@ -20,24 +19,21 @@
 
 .dark {
   background-color: var(--dark-grey-table-normal);
-  &:hover {
+  &.focused {
     background-color: var(--seconadary-dark-grey);
   }
 }
 
 .orange {
   background-color: var(--primary-orange-button);
-  &:hover {
+  &.focused {
     background-color: var(--primary-orange-button-hover);
   }
 }
 
 .glass {
   background-color: rgba(255, 255, 255, 0.15);
-  &:hover {
+  &.focused {
     background-color: var(--light-text);
   }
-}
-.focused{
-  background-color: blue;
 }

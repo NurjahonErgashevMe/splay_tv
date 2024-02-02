@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useCallback, useEffect } from "react";
 import s from "./guest.module.scss";
 import Video from "public/assets/videos/guestVideo.mp4";
 import SPLayLogo from "public/assets/image/SPlayLogo.svg";
@@ -13,57 +13,29 @@ import {
 
 import { Center } from "@/components/Center/Center";
 import { LinkButton } from "@/components/LinkButton/LinkButton";
+import { LinkButtonExtraProps } from "@/types/extraProps/LinkButton";
+import { useNavigate } from "react-router-dom";
 
-interface GuestProps {
-  focusKeyParam: string;
-}
+const Guest: FC = () => {
+  const navigation = useNavigate();
+  const { ref, focusSelf, focusKey } = useFocusable();
 
-const Guest: FC<GuestProps> = ({ focusKeyParam }) => {
-  const {
-    ref,
-    focusSelf,
-    hasFocusedChild,
-    focusKey,
-    // setFocus, -- to set focus manually to some focusKey
-    // navigateByDirection, -- to manually navigate by direction
-    // pause, -- to pause all navigation events
-    // resume, -- to resume all navigation events
-    // updateAllLayouts, -- to force update all layouts when needed
-    // getCurrentFocusKey -- to get the current focus key
-  } = useFocusable({
-    focusable: true,
-    saveLastFocusedChild: false,
-    trackChildren: true,
-    autoRestoreFocus: true,
-    isFocusBoundary: false,
-    focusKey: focusKeyParam,
-    preferredChildFocusKey: "",
-    onEnterPress: () => {
-      console.log("enter pass");
-    },
-    onEnterRelease: () => {
-      console.log("enter release");
-    },
-    onArrowPress: () => false,
-    onFocus: () => {},
-    onBlur: () => {},
-    extraProps: { foo: "bar" },
-  });
+  const onPressChanger = useCallback((asset: LinkButtonExtraProps) => {
+    navigation(asset.to);
+  }, []);
 
   useEffect(() => {
     focusSelf();
   }, [focusSelf]);
 
-  console.log(hasFocusedChild);
-
   return (
     <FocusContext.Provider value={focusKey}>
       <div className={s.guest} ref={ref}>
-        <div className={s.videoWrapper}>
+        <Center flexDirection="row" className={s.videoWrapper}>
           <video autoPlay muted loop className={s.video}>
             <source src={Video} />
           </video>
-        </div>
+        </Center>
         <Center className={s.container}>
           <div className={s.logoWrapper}>
             <SVG src={SPLayLogo} width={145} height={74} className={s.logo} />
@@ -82,21 +54,7 @@ const Guest: FC<GuestProps> = ({ focusKeyParam }) => {
               variant="orange"
               className={s.button}
               aria-label="Начать-смотреть"
-            >
-              <SVG
-                src={PLayIcon}
-                width={15}
-                height={18}
-                className={s.playIcon}
-              />
-              НАЧАТЬ СМОТРЕТЬ
-            </LinkButton>
-
-            <LinkButton
-              href="/signin-with-qrcode"
-              variant="orange"
-              className={s.button}
-              aria-label="Начать-смотреть"
+              onPress={onPressChanger}
             >
               <SVG
                 src={PLayIcon}

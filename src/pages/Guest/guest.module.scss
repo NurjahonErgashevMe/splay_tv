@@ -37,7 +37,7 @@
         max-width: 80%;
         font-size: 1.125rem;
         margin-bottom: 1.25rem;
-        font-weight: 300;
+        font-weight: 100;
         line-height: 1.875rem;
       }
       .button {
@@ -45,16 +45,16 @@
         justify-content: center;
         align-items: center;
         gap: 5px;
-        // max-width: 100%;
+        max-width: 100%;
       }
       // @include breakpoint("md") {
       //   .headingText {
-      //     font-size: 4rem;
-      //     line-height: 5rem;
+      //     font-size: 1rem;
+      //     line-height: 1rem;
       //   }
       //   .subtitleText {
-      //     font-size: 2rem;
-      //     line-height: 2.5rem;
+      //     font-size: 1rem;
+      //     // line-height: 2.5rem;
       //   }
       //   .button {
       //     width: 40%;
@@ -66,25 +66,25 @@
       //     }
       //   }
       // }
-      // @include breakpoint("lg") {
-      //   .headingText {
-      //     font-size: 5rem;
-      //     line-height: 7rem;
-      //   }
-      //   .subtitleText {
-      //     font-size: 3rem;
-      //     line-height: 3rem;
-      //   }
-      //   .button {
-      //     width: 40%;
-      //     font-size: 1.8rem;
-      //     padding: 1rem;
-      //     .playIcon {
-      //       width: 2rem;
-      //       height: 2rem;
-      //     }
-      //   }
-      // }
+      @include breakpoint("lg") {
+        .headingText {
+          font-size: 4.5rem;
+          line-height: 6rem;
+        }
+        .subtitleText {
+          font-size: 2.3rem;
+          line-height: 3rem;
+        }
+        .button {
+          width: 40%;
+          font-size: 1.8rem;
+          padding: 1rem;
+          .playIcon {
+            width: 2rem;
+            height: 2rem;
+          }
+        }
+      }
     }
   }
 }

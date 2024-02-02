@@ -6,6 +6,7 @@
   list-style: none;
   font-family: SF Pro Display;
   color: #fff;
+  cursor: none;
 }
 
 @font-face {
@@ -75,19 +76,39 @@
   --primary-color: #ffffff;
   --menu-bar-height: 4.375rem;
   --header-height: 5.625rem;
-  --default-transiton : all .4s ease;
+  --default-transiton: all 0.4s ease;
 }
 ::-webkit-scrollbar {
   display: none;
 }
-
 
 @mixin container {
   width: 90%;
   margin: 0 auto;
 }
 
-body{
+body {
   background-color: var(--black);
-  cursor: none;
+}
+
+.page {
+  transition: var(--default-transiton);
+}
+
+.page-enter {
+  opacity: 0;
+}
+
+.page-enter-active {
+  opacity: 1;
+  transition: opacity 300ms, transform 300ms;
+}
+
+.page-exit {
+  opacity: 1;
+}
+
+.page-exit-active {
+  opacity: 0;
+  transition: opacity 300ms, transform 300ms;
 }
