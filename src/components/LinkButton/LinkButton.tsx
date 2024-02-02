@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from "react";
+import { FC, HTMLProps, PropsWithChildren } from "react";
 import s from "../Button/button.module.scss";
 import cn from "classnames";
 import { Link, LinkProps, To, useLocation } from "react-router-dom";
@@ -9,10 +9,16 @@ import {
   KeyPressDetails,
   useFocusable,
 } from "@noriginmedia/norigin-spatial-navigation";
+
 import { LinkButtonExtraProps } from "@/types/extraProps/LinkButton";
 
+type Variants = "orange" | "dark" | "transparent" | "black" | "glass";
+
+type FocusedVariants = Variants | "white";
+
 type LinkButtonProps = PropsWithChildren<{
-  variant: "orange" | "dark" | "transparent" | "black" | "glass";
+  variant: Variants;
+  focusedClassName?: FocusedVariants;
   href: To;
   disabled?: boolean;
   className?: string;
@@ -23,7 +29,7 @@ type LinkButtonProps = PropsWithChildren<{
     details: FocusDetails
   ) => void;
 }> &
-  Partial<LinkProps & React.RefAttributes<HTMLAnchorElement>>;
+  Partial<LinkProps & HTMLProps<HTMLAnchorElement>>;
 
 export const LinkButton: FC<LinkButtonProps> = ({
   children,
@@ -31,6 +37,7 @@ export const LinkButton: FC<LinkButtonProps> = ({
   disabled,
   href,
   className,
+  focusedClassName,
   onFocus,
   onPress,
   ...buttonProps
@@ -49,6 +56,14 @@ export const LinkButton: FC<LinkButtonProps> = ({
     transparent: s.transparent,
     glass: s.glass,
   };
+  const focusedVariants: Record<FocusedVariants, string> = {
+    orange: s.focusOrange,
+    black: s.focusBlack,
+    dark: s.focusDark,
+    transparent: s.focusTransparent,
+    glass: s.focusGlass,
+    white: s.focusedWhite,
+  };
 
   return (
     <FocusContext.Provider value={focusKey}>
@@ -60,6 +75,10 @@ export const LinkButton: FC<LinkButtonProps> = ({
           variants[variant],
           disabled ? s.disabled : null,
           focused ? s.focused : null,
+          {
+            [focusedVariants[focusedClassName as FocusedVariants]]:
+              focusedClassName && focused,
+          },
           className
         )}
         {...buttonProps}

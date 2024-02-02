@@ -11,16 +11,20 @@
 
 .black {
   background-color: var(--black);
+  &.focus {
+    background-color: var(--grey);
+  }
 }
 
 .disabled {
-  color: var(--disable-text);
+  color: var(--disable-text) !important;
 }
 
 .dark {
   background-color: var(--dark-grey-table-normal);
   &.focused {
-    background-color: var(--seconadary-dark-grey);
+    background-color: var(--light);
+    color: var(--black);
   }
 }
 
@@ -36,4 +40,30 @@
   &.focused {
     background-color: var(--light-text);
   }
+}
+
+.transparent {
+  background-color: transparent;
+}
+
+.focusOrange {
+  background-color: var(--primary-orange-button) !important;
+  color: var(--light) !important;
+}
+
+.focusBlack {
+  background-color: var(--black) !important;
+  color: var(--light) !important;
+}
+
+.focusDark {
+  color: var(--light) !important;
+  background-color: var(--dark-grey-table-normal) !important;
+}
+
+.focusTransparent {
+  background-color: transparent !important;
+}
+.focusGlass {
+  background-color: rgba(255, 255, 255, 0.15) !important;
 }

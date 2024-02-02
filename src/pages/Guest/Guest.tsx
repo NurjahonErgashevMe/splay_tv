@@ -2,9 +2,10 @@ import { FC, useCallback, useEffect } from "react";
 import s from "./guest.module.scss";
 import Video from "public/assets/videos/guestVideo.mp4";
 import SPLayLogo from "public/assets/image/SPlayLogo.svg";
-import PLayIcon from "public/assets/icons/Play.svg";
 
 import SVG from "react-inlinesvg";
+
+import { IconPlayerPlayFilled } from "@tabler/icons-react";
 
 import {
   FocusContext,
@@ -50,14 +51,14 @@ const Guest: FC = () => {
               Фильмов, Сериалов, Мультфильмов разного жанра, и многое другое
             </p>
             <LinkButton
-              href="/signin-with-qrcode"
+              href="/auth"
               variant="orange"
               className={s.button}
               aria-label="Начать-смотреть"
               onPress={onPressChanger}
+              focusedClassName="orange"
             >
-              <SVG
-                src={PLayIcon}
+              <IconPlayerPlayFilled
                 width={15}
                 height={18}
                 className={s.playIcon}

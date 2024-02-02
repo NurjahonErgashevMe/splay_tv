@@ -12,4 +12,5 @@ export const Center = styled.div<CenterProps>`
   justify-content: ${(props) => props.justifyContent || "center"};
   align-items: ${(props) => props.alignItems || "center"};
   flex-direction: ${(props) => props.flexDirection || "column"};
+  height: 100%;
 `;
