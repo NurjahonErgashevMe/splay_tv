@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, FC, useCallback, useEffect, useState } from "react";
+import { DetailedHTMLProps, FC, useCallback, useState } from "react";
 import s from "./input.module.scss";
 import {
   FocusContext,

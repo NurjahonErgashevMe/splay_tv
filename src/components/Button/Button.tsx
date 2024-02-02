@@ -17,7 +17,7 @@ export type ButtonProps = {
   variant: Variants;
   href?: string;
   focusedClassName?: FocusedVariants;
-  onPress?: (props: object, details: KeyPressDetails) => void;
+  onPress?: (props?: any, details?: KeyPressDetails) => void;
   onFocus?: (
     layout: FocusableComponentLayout,
     props: object,

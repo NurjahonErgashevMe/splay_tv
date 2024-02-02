@@ -1,0 +1,19 @@
+.modalContainer {
+  background-color: var(--black);
+  padding: 8px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  overflow-y: scroll;
+}
+
+.modalContent {
+  background-color: rgb(22, 22, 22);
+  padding: 3.75rem 1rem;
+  border-radius: 1rem;
+}
