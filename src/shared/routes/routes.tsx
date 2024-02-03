@@ -18,6 +18,7 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 const GuestPage = lazy(() => import("pages/Guest/Guest"));
 const AuthPage = lazy(() => import("pages/Auth/Auth"));
+const ScreenPage = lazy(() => import("pages/Screen/Screen"));
 
 const SignInWithQrCode = lazy(
   () => import("pages/SigninWithQRCode/SigninWithQrCode")
@@ -38,6 +39,11 @@ const routes: Array<RouteObject & { nodeRef: RefObject<HTMLDivElement> }> = [
   {
     path: "auth",
     element: <AuthPage />,
+    nodeRef: createRef(),
+  },
+  {
+    path: "screen/:screen",
+    element: <ScreenPage />,
     nodeRef: createRef(),
   },
 ];

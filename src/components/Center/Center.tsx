@@ -5,6 +5,7 @@ interface CenterProps extends HTMLProps<HTMLDivElement> {
   justifyContent?: CSSProperties["justifyContent"];
   alignItems?: CSSProperties["alignContent"];
   flexDirection?: CSSProperties["flexDirection"];
+  gap: string;
 }
 
 export const Center = styled.div<CenterProps>`
@@ -13,4 +14,5 @@ export const Center = styled.div<CenterProps>`
   align-items: ${(props) => props.alignItems || "center"};
   flex-direction: ${(props) => props.flexDirection || "column"};
   height: 100%;
+  gap: ${(props) => props.gap || 0};
 `;

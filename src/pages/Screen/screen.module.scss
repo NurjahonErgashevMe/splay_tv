@@ -1,0 +1,73 @@
+@import "/src/styles/breakpoints";
+
+.screen {
+  .container {
+    width: 70%;
+    height: 100%;
+    min-height: 100lvh;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 2000px;
+    .logoWrapper {
+      position: fixed;
+      top: 3rem;
+      .logo {
+        aspect-ratio: 2/1;
+        max-width: 400px;
+        max-height: 100px;
+      }
+    }
+    .title {
+      font-size: 3rem;
+      font-weight: 600;
+      line-height: 4.063rem;
+    }
+    .description {
+      font-size: 1.125rem;
+      margin-bottom: 1.25rem;
+      font-weight:300;
+      line-height: 1.875rem;
+    }
+
+    .tv {
+      width: 100%;
+      max-width: 1300px;
+      filter: drop-shadow(var(--primary) 0rem 0rem 1.875rem);
+      .tvImage {
+        aspect-ratio: 1.9/1;
+        position: relative;
+      }
+      .screenImage {
+        top: 0;
+        left: -3px;
+        width: 99%;
+        height: 85%;
+        position: absolute;
+      }
+    }
+
+    @include breakpoint("md") {
+      .title {
+        font-size: 5rem;
+        line-height: 5.7rem;
+      }
+      .description {
+        font-size: 2rem;
+        line-height: 2.5rem;
+      }
+    }
+    @include breakpoint("lg") {
+      .title {
+        font-size: 8rem;
+        line-height: 10rem;
+      }
+      .description {
+        font-size: 4.375rem;
+        line-height: 5rem;
+      }
+    }
+  }
+}
