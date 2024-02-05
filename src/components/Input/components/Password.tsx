@@ -10,14 +10,12 @@ import {
 } from "@noriginmedia/norigin-spatial-navigation";
 import { IconEye } from "@tabler/icons-react";
 import { Center } from "@/components/Center/Center";
-import useKeyPress from "@/hooks/useKeyPress";
 
 interface PasswordIconProps extends HTMLProps<HTMLDivElement> {
   type: "text" | "password";
   setType: (type: "text" | "password") => void;
 }
 const PasswordIcon: FC<PasswordIconProps> = ({ setType, type, ...props }) => {
-  const enterPressed = useKeyPress("Enter");
   const { focused, ref, focusKey } = useFocusable({
     extraProps: { component: "password" },
     onEnterPress: () => {

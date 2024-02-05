@@ -1,14 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-refresh/only-export-components */
 import { ButtonHTMLAttributes, DetailedHTMLProps, FC, useEffect } from "react";
 import s from "./button.module.scss";
 import cn from "classnames";
 import {
   FocusContext,
-  FocusDetails,
-  FocusableComponentLayout,
-  KeyPressDetails,
   useFocusable,
 } from "@noriginmedia/norigin-spatial-navigation";
+import { Focusable } from "@/types/focusable";
 
 export const variants: Record<Variants, string> = {
   orange: s.orange,
@@ -94,13 +93,8 @@ export type ButtonProps = {
   href?: string;
   focusedClassName?: string;
   focusedVariant?: FocusedVariants;
-  onPress?: (props?: any, details?: KeyPressDetails) => void;
-  onFocus?: (
-    layout: FocusableComponentLayout,
-    props: object,
-    details: FocusDetails
-  ) => void;
   focusedSelf?: boolean;
 } & Partial<
   DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
->;
+> &
+  Focusable<any, object>;

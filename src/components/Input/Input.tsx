@@ -2,22 +2,29 @@ import { DetailedHTMLProps, FC, useCallback, useEffect, useState } from "react";
 import s from "./input.module.scss";
 import {
   FocusContext,
-  FocusDetails,
-  FocusableComponentLayout,
-  KeyPressDetails,
   useFocusable,
 } from "@noriginmedia/norigin-spatial-navigation";
 
 import PasswordIcon from "./components/Password";
 import InputContent from "./components/InputContent";
 import classNames from "classnames";
+import { Focusable } from "@/types/focusable";
 
 const Input: FC<InputProps> = (props) => {
-  const { password, onFocus, onPress, focusedSelf = false } = props;
-
-  const { ref, focused, focusKey, focusSelf } = useFocusable({
+  const {
+    password,
+    label,
+    onPress,
+    focusedSelf,
+    placeholder,
+    value,
+    error,
+    onFocus,
+  } = props;
+  const { ref, focusKey, focusSelf, hasFocusedChild } = useFocusable({
     extraProps: { hello: "string" },
     onEnterPress: onPress,
+    trackChildren: true,
     onFocus,
   });
 
@@ -39,9 +46,18 @@ const Input: FC<InputProps> = (props) => {
     <FocusContext.Provider value={focusKey}>
       <div
         ref={ref}
-        className={classNames(s.inputWrapper, focused ? s.focused : null)}
+        className={classNames(s.inputWrapper, {
+          [s.focused]: hasFocusedChild || props.usingFocusClassName,
+        })}
       >
-        <InputContent {...props} />
+        <InputContent
+          value={value}
+          label={label}
+          placeholder={placeholder}
+          error={error}
+          onPress={onPress}
+          type={typeAttribute}
+        />
         {password ? (
           <PasswordIcon type={typeAttribute} setType={changeTypeAtribute} />
         ) : null}
@@ -56,12 +72,9 @@ type InputProps = {
   password?: boolean;
   label: string;
   placeholder: string;
-  error?: boolean;
-  onPress?: (props: object, details: KeyPressDetails) => void;
-  onFocus?: (
-    layout: FocusableComponentLayout,
-    props: object,
-    details: FocusDetails
-  ) => void;
   focusedSelf?: boolean;
-} & DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+  value: string;
+  error?: boolean;
+  usingFocusClassName?: boolean;
+} & DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
+  Focusable<object>;

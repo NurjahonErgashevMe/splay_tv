@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FC, HTMLProps, PropsWithChildren } from "react";
 import s from "../Button/button.module.scss";
 import cn from "classnames";
@@ -10,9 +11,6 @@ import {
 } from "react-router-dom";
 import {
   FocusContext,
-  FocusDetails,
-  FocusableComponentLayout,
-  KeyPressDetails,
   useFocusable,
 } from "@noriginmedia/norigin-spatial-navigation";
 
@@ -23,27 +21,12 @@ import {
   focusedVariants,
   variants,
 } from "../Button/Button";
-
-type LinkButtonProps = PropsWithChildren<{
-  variant: Variants;
-  focusedClassName?: string;
-  focusedVariant?: FocusedVariants;
-  href: To;
-  disabled?: boolean;
-  className?: string;
-  onPress?: (props: LinkButtonExtraProps, details: KeyPressDetails) => void;
-  onFocus?: (
-    layout: FocusableComponentLayout,
-    props: object,
-    details: FocusDetails
-  ) => void;
-}> &
-  Partial<LinkProps & HTMLProps<HTMLAnchorElement>>;
+import { Focusable } from "@/types/focusable";
 
 export const LinkButton: FC<LinkButtonProps> = ({
   children,
   variant,
-  disabled,
+  disabled = false,
   href,
   className,
   focusedClassName,
@@ -89,3 +72,14 @@ export const LinkButton: FC<LinkButtonProps> = ({
     </FocusContext.Provider>
   );
 };
+
+type LinkButtonProps = PropsWithChildren<{
+  variant: Variants;
+  focusedClassName?: string;
+  focusedVariant?: FocusedVariants;
+  href: To;
+  disabled?: boolean;
+  className?: string;
+}> &
+  Partial<LinkProps & HTMLProps<HTMLAnchorElement>> &
+  Focusable<LinkButtonExtraProps, object>;

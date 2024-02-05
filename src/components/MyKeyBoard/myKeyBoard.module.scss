@@ -1,25 +1,59 @@
 .myKeyBoard {
-    width: 100%;
+  width: 100%;
+  max-width: 800px;
 }
-.letters{
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);   
-    gap: 12px;
+.letters {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 12px;
 }
 
 .button {
-  width: 50px !important;
-  height: 60px !important;
+  width: 56px;
+  height: 64px;
   padding: 0 !important;
   border-radius: 10px !important;
   background-color: #202020 !important;
   font-size: 2rem !important;
   font-weight: 500;
   line-height: 4rem;
+  &.letterToNumber {
+    font-size: 1.3rem !important;
+  }
+  &.next,
+  &.prev {
+    &.focused {
+      .nextIcon path {
+        fill: #000;
+      }
+      .prevIcon path {
+        fill: #000;
+      }
+    }
+  }
 }
 
 .focused {
   background-color: var(--light) !important;
   color: #202020 !important;
+  svg {
+    stroke: #000;
+  }
+}
+
+.functionality {
+  margin-top: 12px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  .button {
+    &.space {
+      width: 192px;
+    }
+    &.enter {
+      width: 124px;
+    }
+  }
 }

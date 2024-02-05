@@ -34,7 +34,10 @@ const GoToPrevious: FC<GoToPreviousProps> = ({
   const { ref, focused, focusKey, focusSelf } = useFocusable({
     onEnterPress: navigateToPrevious,
     onEnterRelease: navigateToPrevious,
-    onArrowPress: () => true,
+    onArrowPress: (arrow) => {
+      console.log(arrow);
+      return true;
+    },
     onFocus,
   });
 
