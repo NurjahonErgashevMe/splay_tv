@@ -1,0 +1,25 @@
+.myKeyBoard {
+    width: 100%;
+}
+.letters{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);   
+    gap: 12px;
+}
+
+.button {
+  width: 50px !important;
+  height: 60px !important;
+  padding: 0 !important;
+  border-radius: 10px !important;
+  background-color: #202020 !important;
+  font-size: 2rem !important;
+  font-weight: 500;
+  line-height: 4rem;
+}
+
+.focused {
+  background-color: var(--light) !important;
+  color: #202020 !important;
+}

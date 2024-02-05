@@ -24,15 +24,15 @@ const Auth: FC = () => {
   return (
     <FocusContext.Provider value={focusKey}>
       <div ref={ref}>
-        <Button variant="glass" focusedClassName="orange">
+        <Button variant="glass" focusedVariant="orange">
           hello
         </Button>
-        <Button variant="glass" focusedClassName="orange">
+        <Button variant="glass" focusedVariant="orange">
           hello
         </Button>
         <Button
           variant="transparent"
-          focusedClassName="orange"
+          focusedVariant="orange"
           onPress={handleModalOpen}
         >
           HELLO
@@ -42,14 +42,14 @@ const Auth: FC = () => {
           <h1>HELLO WORLD</h1>
           <Button
             variant="glass"
-            focusedClassName="orange"
+            focusedVariant="orange"
             onPress={() => handleModalOpen(false)}
           >
             HELLO
           </Button>
           <Button
             variant="glass"
-            focusedClassName="orange"
+            focusedVariant="orange"
             onPress={() => handleModalOpen(false)}
           >
             HELLO x2

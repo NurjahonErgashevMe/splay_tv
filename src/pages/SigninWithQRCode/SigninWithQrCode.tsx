@@ -20,7 +20,7 @@ const SigninWithQrCode: FC = () => {
   return (
     <FocusContext.Provider value={focusKey}>
       <Center className={s.SigninWithQrCode}>
-        <GoToPrevious />
+        <GoToPrevious previous={"/signin"}  />
         <div className={s.container}>
           <div className={s.qrcode}>
             <SVG

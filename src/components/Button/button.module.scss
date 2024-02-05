@@ -9,6 +9,15 @@
   padding: 18px 32px 18px 32px;
 }
 
+.unstyled {
+  padding: 0;
+  background-color: transparent;
+  border-radius: 0;
+  &.focus {
+    color: var(--dark-light-input-hover);
+  }
+}
+
 .black {
   background-color: var(--black);
   &.focus {
@@ -45,6 +54,14 @@
 .transparent {
   background-color: transparent;
 }
+.transprentWithBottomOrder {
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  &.focused {
+    background-color: var(--tertinary-dark-grey);
+    border-bottom: 1px solid #fff;
+  }
+}
 
 .focusOrange {
   background-color: var(--primary-orange-button) !important;
@@ -66,4 +83,21 @@
 }
 .focusGlass {
   background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.focusedTransprentWithBottomOrder {
+  background: transparent;
+  border-bottom: 1px solid #fff;
+}
+
+.focusUnstyled {
+  padding: 0px;
+  background-color: transparent;
+  border-radius: 0;
+  color: var(--dark-light-input-hover) !important;
+}
+
+.focusedWhite{
+  background-color: var(--light);
+  color: var(--black);
 }

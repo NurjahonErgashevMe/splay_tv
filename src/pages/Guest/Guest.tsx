@@ -56,7 +56,7 @@ const Guest: FC = () => {
               className={s.button}
               aria-label="Начать-смотреть"
               onPress={onPressChanger}
-              focusedClassName="orange"
+              focusedVariant="orange"
             >
               <IconPlayerPlayFilled
                 width={15}

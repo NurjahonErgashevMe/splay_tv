@@ -1,7 +1,13 @@
 import { FC, HTMLProps, PropsWithChildren } from "react";
 import s from "../Button/button.module.scss";
 import cn from "classnames";
-import { Link, LinkProps, To, useLocation } from "react-router-dom";
+import {
+  Link,
+  LinkProps,
+  To,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import {
   FocusContext,
   FocusDetails,
@@ -11,14 +17,17 @@ import {
 } from "@noriginmedia/norigin-spatial-navigation";
 
 import { LinkButtonExtraProps } from "@/types/extraProps/LinkButton";
-
-type Variants = "orange" | "dark" | "transparent" | "black" | "glass";
-
-type FocusedVariants = Variants | "white";
+import {
+  FocusedVariants,
+  Variants,
+  focusedVariants,
+  variants,
+} from "../Button/Button";
 
 type LinkButtonProps = PropsWithChildren<{
   variant: Variants;
-  focusedClassName?: FocusedVariants;
+  focusedClassName?: string;
+  focusedVariant?: FocusedVariants;
   href: To;
   disabled?: boolean;
   className?: string;
@@ -40,35 +49,26 @@ export const LinkButton: FC<LinkButtonProps> = ({
   focusedClassName,
   onFocus,
   onPress,
+  focusedVariant,
   ...buttonProps
 }) => {
   const location = useLocation();
+  const navigation = useNavigate();
   const { ref, focused, focusKey } = useFocusable<LinkButtonExtraProps>({
     onFocus,
-    onEnterPress: onPress,
+    onEnterPress: (props, details) => {
+      if (onPress) {
+        return onPress?.(props, details);
+      }
+      return navigation(href);
+    },
     extraProps: { clicked: true, to: href, current: location },
   });
-
-  const variants: Record<LinkButtonProps["variant"], string> = {
-    orange: s.orange,
-    black: s.black,
-    dark: s.dark,
-    transparent: s.transparent,
-    glass: s.glass,
-  };
-  const focusedVariants: Record<FocusedVariants, string> = {
-    orange: s.focusOrange,
-    black: s.focusBlack,
-    dark: s.focusDark,
-    transparent: s.focusTransparent,
-    glass: s.focusGlass,
-    white: s.focusedWhite,
-  };
 
   return (
     <FocusContext.Provider value={focusKey}>
       <Link
-        ref={ref}
+        ref={ref as any}
         to={href}
         className={cn(
           s.button,
@@ -76,10 +76,11 @@ export const LinkButton: FC<LinkButtonProps> = ({
           disabled ? s.disabled : null,
           focused ? s.focused : null,
           {
-            [focusedVariants[focusedClassName as FocusedVariants]]:
-              focusedClassName && focused,
+            [focusedVariants[focusedVariant as FocusedVariants]]:
+              focusedVariant && focused,
           },
-          className
+          className,
+          focused ? focusedClassName : null
         )}
         {...buttonProps}
       >
