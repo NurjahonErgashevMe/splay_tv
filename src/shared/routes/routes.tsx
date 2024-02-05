@@ -20,6 +20,9 @@ const GuestPage = lazy(() => import("pages/Guest/Guest"));
 const AuthPage = lazy(() => import("pages/Auth/Auth"));
 const ScreenPage = lazy(() => import("pages/Screen/Screen"));
 const SignInPage = lazy(() => import("pages/SignIn/SignIn"));
+const ForgotPasswordPage = lazy(
+  () => import("pages/ForgotPassword/ForgotPassword")
+);
 
 const SignInWithQrCode = lazy(
   () => import("pages/SigninWithQRCode/SigninWithQrCode")
@@ -50,6 +53,11 @@ const routes: Array<RouteObject & { nodeRef: RefObject<HTMLDivElement> }> = [
   {
     path: "screen/:screen",
     element: <ScreenPage />,
+    nodeRef: createRef(),
+  },
+  {
+    path: "forgot-password",
+    element: <ForgotPasswordPage />,
     nodeRef: createRef(),
   },
 ];
