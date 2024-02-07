@@ -21,12 +21,22 @@ import { numbers } from "@/shared/numbers";
 import { Focusable } from "@/types/focusable";
 
 const MyKeyBoard: FC<KeyBoardProps> = memo(
-  ({ onFocus, onPress, focusedSelf = false, onEnterPressed }) => {
+  ({
+    onFocus,
+    onPress,
+    focusedSelf = false,
+    onEnterPressed,
+    isFocusBoundary,
+    focusBoundaryDirections,
+    className,
+  }) => {
     const [type, setType] = useState<"letters" | "number">("letters");
     const [upperCase, setUpperCase] = useState<boolean>(false);
     const { focusKey, focusSelf, ref } = useFocusable({
       onFocus: onFocus,
       onEnterPress: () => console.log(type, "pressed"),
+      isFocusBoundary,
+      focusBoundaryDirections,
     });
 
     const currentSymbols: (TLetter | string)[] =
@@ -62,7 +72,7 @@ const MyKeyBoard: FC<KeyBoardProps> = memo(
 
     return (
       <FocusContext.Provider value={focusKey}>
-        <div className={s.myKeyBoard} ref={ref}>
+        <div className={cn(s.myKeyBoard, className)} ref={ref}>
           <div className={s.letters}>
             {currentSymbols?.map((item, index) => (
               <Button
@@ -168,6 +178,7 @@ const MyKeyBoard: FC<KeyBoardProps> = memo(
 type KeyBoardProps = {
   onEnterPressed?: (entered: boolean) => void;
   focusedSelf?: boolean;
+  className?: string;
 } & Focusable<{ letter: string }, object>;
 
 export default MyKeyBoard;

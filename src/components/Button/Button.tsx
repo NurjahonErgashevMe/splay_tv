@@ -39,11 +39,15 @@ export const Button: FC<ButtonProps> = ({
   onPress,
   onFocus,
   focusedSelf = false,
+  isFocusBoundary,
+  focusBoundaryDirections,
   ...buttonProps
 }) => {
   const { ref, focused, focusKey, focusSelf } = useFocusable({
     onFocus,
     onEnterPress: onPress,
+    isFocusBoundary,
+    focusBoundaryDirections,
     extraProps: { component: "button" },
   });
 
@@ -51,7 +55,7 @@ export const Button: FC<ButtonProps> = ({
     if (focusedSelf) {
       focusSelf();
     }
-  }, []);
+  }, [focusSelf, focusedSelf]);
 
   return (
     <FocusContext.Provider value={focusKey}>
