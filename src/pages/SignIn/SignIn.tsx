@@ -10,6 +10,7 @@ import SVG from "react-inlinesvg";
 import {
   FocusContext,
   FocusableComponentLayout,
+  setFocus,
   useFocusable,
 } from "@noriginmedia/norigin-spatial-navigation";
 
@@ -22,12 +23,13 @@ import GoToPrevious from "@/components/GoToPrevious/GoToPrevios";
 import MyKeyBoard from "@/components/MyKeyBoard/MyKeyBoard";
 import Tabs from "@/components/Tabs/Tabs";
 import { TTab } from "@/components/Tabs/Tab";
+import { usePrevious } from "@/hooks/usePrevious";
 
 const tabs: TTab[] = [
   {
     title: "Войти в аккаунт",
     href: "/signin",
-    active : true,
+    active: true,
   },
   {
     title: "Зарегистрироваться",
@@ -36,9 +38,16 @@ const tabs: TTab[] = [
 ];
 
 const SignIn: FC = () => {
-  const { focusKey, focusSelf, ref } = useFocusable();
+  const { focusKey, focusSelf, ref } = useFocusable({
+    trackChildren: true,
+  });
+  const [currentFocusKey, setCurrentFocusKey] = useState<string | null>(null);
+
+  const previousFocusKey = usePrevious(currentFocusKey);
 
   const navigate = useNavigate();
+
+  const scrollingRef = useRef<HTMLDivElement>(null);
 
   const [whichInputOpened, setWiсhInputOpened] = useState<
     "login" | "password" | null
@@ -52,7 +61,25 @@ const SignIn: FC = () => {
     focusSelf();
   }, [focusSelf]);
 
-  const scrollingRef = useRef<HTMLDivElement>(null);
+  const focusPreviousComponent = useCallback(
+    (arrow: string, whenArrowIs: string): boolean => {
+      if (arrow === whenArrowIs) {
+        setFocus("PREVIOUS_COMPONENT_FOCUS_KEY");
+      }
+      return true;
+    },
+    []
+  );
+
+  const outPreviousComponent = useCallback(
+    (arrow: string, whenArrowIs: string, key: string): boolean => {
+      if (arrow === whenArrowIs) {
+        setFocus(previousFocusKey ?? key);
+      }
+      return true;
+    },
+    [previousFocusKey]
+  );
 
   const onAssetFocus = useCallback(
     ({ top }: FocusableComponentLayout) => {
@@ -92,60 +119,92 @@ const SignIn: FC = () => {
   return (
     <FocusContext.Provider value={focusKey}>
       <div className={s.signIn} ref={ref}>
-        <GoToPrevious previous={"/guest"} fixed={false} className={s.prev} />
+        <GoToPrevious
+          onArrowPress={(arrow) =>
+            outPreviousComponent(arrow, "right", "PREVIOUS_COMPONENT_FOCUS_KEY")
+          }
+          previous={"/guest"}
+          fixed={false}
+          className={s.prev}
+          onFocus={() =>
+            setCurrentFocusKey(() => "PREVIOUS_COMPONENT_FOCUS_KEY")
+          }
+        />
         <div className={s.container}>
           <div className={s.form} ref={scrollingRef}>
             <Tabs tabs={tabs} />
-            <Center  className={s.tabtext}>
+            <Center className={s.tabtext}>
               Войдите свой аккаунт чтобы начать пользоваться сервисом Splay
             </Center>
             <div className={s.inputs}>
               <Input
+                focusKey="SIGNIN_LOGIN_INPUT"
                 value={login}
                 focusedSelf={whichInputOpened === "login" || !whichInputOpened}
                 label="email-or-phoneNumber"
-                onFocus={() =>
-                  onAssetFocus({ top: 0 } as FocusableComponentLayout)
-                }
-                onPress={() => onInputPress("login")}
+                onFocus={() => {
+                  onAssetFocus({ top: 0 } as FocusableComponentLayout);
+                  setCurrentFocusKey("SIGNIN_LOGIN_INPUT");
+                }}
+                onEnterPress={() => onInputPress("login")}
                 placeholder="Введите E-mail или Номер телефона"
                 usingFocusClassName={whichInputOpened === "login"}
+                onArrowPress={(arrow) => focusPreviousComponent(arrow, "left")}
               />
               <Input
-                onFocus={() =>
-                  onAssetFocus({ top: 0 } as FocusableComponentLayout)
-                }
+                focusKey="SIGNIN_PASSWORD_INPUT"
+                onFocus={() => {
+                  onAssetFocus({ top: 0 } as FocusableComponentLayout);
+                  setCurrentFocusKey("SIGNIN_PASSWORD_INPUT");
+                }}
                 focusedSelf={whichInputOpened === "password"}
-                onPress={() => onInputPress("password")}
+                onEnterPress={() => onInputPress("password")}
                 label="password"
                 placeholder="Введите пароль"
                 usingFocusClassName={whichInputOpened === "password"}
                 password
                 value={password}
+                onArrowPress={(arrow) => focusPreviousComponent(arrow, "left")}
               />
               <LinkButton
+                onFocus={() => {
+                  setCurrentFocusKey("SIGNIN_FORGOT_PASSWORD_LINK");
+                }}
+                focusKey="SIGNIN_FORGOT_PASSWORD_LINK"
                 variant="unstyled"
                 focusedVariant="unstyled"
                 href={"/forgot-password"}
+                onArrowPress={(arrow) => focusPreviousComponent(arrow, "left")}
               >
                 Забыли пароль?
               </LinkButton>
             </div>
             <Button
+              focusKey="SIGNIN_SIGNIN_BUTTON"
               variant="black"
               focusedVariant={loginButtonDisable ? "black" : "orange"}
               disabled={loginButtonDisable}
-              onPress={() => {
+              onArrowPress={(arrow) => focusPreviousComponent(arrow, "left")}
+              onEnterPress={() => {
                 if (!loginButtonDisable) {
                   navigate("/home");
                 }
+              }}
+              onFocus={() => {
+                onAssetFocus({ top: 0 } as FocusableComponentLayout);
+                setCurrentFocusKey("SIGNIN_SIGNIN_BUTTON");
               }}
             >
               Войти
             </Button>
             <DividerWithText text="ИЛИ" />
             <LinkButton
-              onFocus={(e) => onAssetFocus(e as FocusableComponentLayout)}
+              focusKey="SIGNIN_SIGNIN_WITH_QR_CODE_BUTTON"
+              onFocus={() => {
+                onAssetFocus({ top: 0 } as FocusableComponentLayout);
+                setCurrentFocusKey("SIGNIN_SIGNIN_WITH_QR_CODE_BUTTON");
+              }}
+              onArrowPress={(arrow) => focusPreviousComponent(arrow, "left")}
               href={"/signin-with-qrcode"}
               variant="transprentWithBottomOrder"
               focusedVariant="transparent"
@@ -156,7 +215,12 @@ const SignIn: FC = () => {
               </Center>
             </LinkButton>
             <LinkButton
-              onFocus={(e) => onAssetFocus(e as FocusableComponentLayout)}
+              focusKey="SIGNIN_SIGNIN_WITH_CODE_BUTTON"
+              onArrowPress={(arrow) => focusPreviousComponent(arrow, "left")}
+              onFocus={(e) => {
+                onAssetFocus(e as FocusableComponentLayout);
+                setCurrentFocusKey("SIGNIN_SIGNIN_WITH_CODE_BUTTON");
+              }}
               href={"/signin-with-code"}
               variant="transprentWithBottomOrder"
               focusedVariant="transparent"
@@ -170,7 +234,7 @@ const SignIn: FC = () => {
           {whichInputOpened ? (
             <div className={s.keyboard}>
               <MyKeyBoard
-                onPress={(e) => {
+                onEnterPress={(e) => {
                   if (e?.letter === "del") {
                     return handleInputChange("del");
                   }

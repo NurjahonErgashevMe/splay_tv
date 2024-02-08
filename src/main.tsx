@@ -5,7 +5,7 @@ import "./index.scss";
 import { init } from "@noriginmedia/norigin-spatial-navigation";
 
 init({
-  nativeMode: false,
+  useGetBoundingClientRect: true,
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

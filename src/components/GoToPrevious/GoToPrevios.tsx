@@ -9,17 +9,10 @@ import ArrowLeftIcon from "public/assets/icons/Arrow-left.svg";
 import cn from "classnames";
 import {
   FocusContext,
-  FocusHandler,
+  UseFocusableConfig,
+  setFocus,
   useFocusable,
 } from "@noriginmedia/norigin-spatial-navigation";
-
-interface GoToPreviousProps {
-  className?: string;
-  onFocus?: FocusHandler<unknown>;
-  previous?: To;
-  fixed?: boolean;
-  focusedSelf?: boolean;
-}
 
 const GoToPrevious: FC<GoToPreviousProps> = ({
   className,
@@ -27,6 +20,9 @@ const GoToPrevious: FC<GoToPreviousProps> = ({
   previous,
   focusedSelf = false,
   fixed = true,
+  outChildFocusKey,
+  onArrowPress,
+  focusKey: PropsFocusKey,
 }) => {
   const navigate = useNavigate();
   const navigateToPrevious = () => navigate(previous ?? (-1 as To));
@@ -35,9 +31,17 @@ const GoToPrevious: FC<GoToPreviousProps> = ({
     onEnterPress: navigateToPrevious,
     onEnterRelease: navigateToPrevious,
     onArrowPress: (arrow) => {
-      console.log(arrow);
-      return true;
+      if (onArrowPress) {
+        return onArrowPress?.(arrow, arrow as never, { pressedKeys: {} });
+      } else {
+        if (arrow === "right" && outChildFocusKey) {
+          setFocus(outChildFocusKey);
+        }
+        return true;
+      }
     },
+    focusKey: PropsFocusKey ?? "PREVIOUS_COMPONENT_FOCUS_KEY",
+    saveLastFocusedChild: true,
     onFocus,
   });
 
@@ -45,7 +49,7 @@ const GoToPrevious: FC<GoToPreviousProps> = ({
     if (focusedSelf) {
       focusSelf();
     }
-  }, []);
+  }, [focusSelf, focusedSelf]);
 
   return (
     <FocusContext.Provider value={focusKey}>
@@ -70,5 +74,13 @@ const GoToPrevious: FC<GoToPreviousProps> = ({
     </FocusContext.Provider>
   );
 };
+
+type GoToPreviousProps = {
+  className?: string;
+  previous?: To;
+  fixed?: boolean;
+  focusedSelf?: boolean;
+  outChildFocusKey?: string;
+} & UseFocusableConfig;
 
 export default GoToPrevious;

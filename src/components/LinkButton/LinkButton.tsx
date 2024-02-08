@@ -1,16 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FC, HTMLProps, PropsWithChildren } from "react";
+
 import s from "../Button/button.module.scss";
 import cn from "classnames";
+
 import {
   Link,
   LinkProps,
   To,
-  useLocation,
   useNavigate,
 } from "react-router-dom";
 import {
   FocusContext,
+  UseFocusableConfig,
   useFocusable,
 } from "@noriginmedia/norigin-spatial-navigation";
 
@@ -21,31 +23,54 @@ import {
   focusedVariants,
   variants,
 } from "../Button/Button";
-import { Focusable } from "@/types/focusable";
 
-export const LinkButton: FC<LinkButtonProps> = ({
-  children,
-  variant,
-  disabled = false,
-  href,
-  className,
-  focusedClassName,
-  onFocus,
-  onPress,
-  focusedVariant,
-  ...buttonProps
-}) => {
-  const location = useLocation();
+export const LinkButton: FC<LinkButtonProps> = (props) => {
+  const {
+    children,
+    variant,
+    disabled = false,
+    href,
+    className,
+    focusedClassName,
+    onFocus,
+    onEnterPress,
+    onArrowPress,
+    focusKey: PropsFocusKey,
+    forceFocus,
+    isFocusBoundary,
+    extraProps,
+    preferredChildFocusKey,
+    onBlur,
+    autoRestoreFocus,
+    saveLastFocusedChild,
+    focusable,
+    focusBoundaryDirections,
+    onEnterRelease,
+    focusedVariant,
+    ...buttonProps
+  } = props;
+
   const navigation = useNavigate();
   const { ref, focused, focusKey } = useFocusable<LinkButtonExtraProps>({
     onFocus,
     onEnterPress: (props, details) => {
-      if (onPress) {
-        return onPress?.(props, details);
+      if (onEnterPress) {
+        return onEnterPress?.(props, details);
       }
       return navigation(href);
     },
-    extraProps: { clicked: true, to: href, current: location },
+    extraProps,
+    focusKey: PropsFocusKey,
+    forceFocus,
+    autoRestoreFocus,
+    onBlur,
+    focusable,
+    focusBoundaryDirections,
+    isFocusBoundary,
+    onArrowPress,
+    onEnterRelease,
+    preferredChildFocusKey,
+    saveLastFocusedChild,
   });
 
   return (
@@ -82,4 +107,4 @@ type LinkButtonProps = PropsWithChildren<{
   className?: string;
 }> &
   Partial<LinkProps & HTMLProps<HTMLAnchorElement>> &
-  Focusable<LinkButtonExtraProps, object>;
+  UseFocusableConfig<LinkButtonExtraProps>;

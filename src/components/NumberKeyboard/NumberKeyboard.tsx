@@ -10,16 +10,17 @@ import cn from "classnames";
 import {
   FocusContext,
   useFocusable,
+  setFocus,
+  UseFocusableConfig,
+  EnterPressHandler,
 } from "@noriginmedia/norigin-spatial-navigation";
-
-import { Focusable } from "@/types/focusable";
 
 const NumberKeyboard: FC<NumberKeyboardProps> = ({
   onDeletePress,
   className,
   focusedSelf,
   onFocus,
-  onPress,
+  onEnterPress,
   isFocusBoundary,
   focusBoundaryDirections,
 }) => {
@@ -27,13 +28,21 @@ const NumberKeyboard: FC<NumberKeyboardProps> = ({
     onFocus,
     isFocusBoundary,
     focusBoundaryDirections,
+    onArrowPress: (arrow) => {
+      if (arrow === "left") {
+        console.log(arrow);
+        setFocus("PREVIOUS_COMPONENT_FOCUS_KEY");
+      }
+      return true;
+    },
+    focusKey: "NUMBER_KEYBOARD_FOCUS_KEY",
   });
 
   const handlePress = useCallback(
     (number: number) => {
-      onPress?.({ number });
+      onEnterPress?.({ number }, { pressedKeys: {} });
     },
-    [onPress]
+    [onEnterPress]
   );
 
   useEffect(() => {
@@ -50,7 +59,7 @@ const NumberKeyboard: FC<NumberKeyboardProps> = ({
             variant="dark"
             focusedVariant="white"
             key={item}
-            onPress={() => handlePress(item)}
+            onEnterPress={() => handlePress(item)}
             className={s.button}
             focusedClassName={s.focusedButton}
           >
@@ -60,7 +69,7 @@ const NumberKeyboard: FC<NumberKeyboardProps> = ({
         <Button
           variant="dark"
           focusedVariant="white"
-          onPress={() => onDeletePress?.({})}
+          onEnterPress={() => onDeletePress?.({}, { pressedKeys: {} })}
           className={cn(s.button, s.deleteButton)}
           focusedClassName={cn(s.focusedButton, s.focusedDeleteButton)}
         >
@@ -73,11 +82,11 @@ const NumberKeyboard: FC<NumberKeyboardProps> = ({
 
 type NumberKeyboardProps = {
   focusedSelf?: boolean;
-  onDeletePress: Focusable["onPress"];
+  onDeletePress: EnterPressHandler;
   className?: string;
   focusedClassName?: string;
   isFocusBoundary?: boolean;
   focusBoundaryDirections?: Array<"up" | "left" | "right" | "down">;
-} & Focusable<{ number: number }>;
+} & UseFocusableConfig<{ number: number }>;
 
 export default NumberKeyboard;

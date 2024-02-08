@@ -2,30 +2,53 @@ import { DetailedHTMLProps, FC, useCallback, useEffect, useState } from "react";
 import s from "./input.module.scss";
 import {
   FocusContext,
+  UseFocusableConfig,
   useFocusable,
 } from "@noriginmedia/norigin-spatial-navigation";
 
 import PasswordIcon from "./components/Password";
 import InputContent from "./components/InputContent";
 import classNames from "classnames";
-import { Focusable } from "@/types/focusable";
 
 const Input: FC<InputProps> = (props) => {
   const {
     password,
     label,
-    onPress,
+    onEnterPress,
     focusedSelf,
     placeholder,
     value,
     error,
     onFocus,
+    onArrowPress,
+    focusKey: PropsFocusKey,
+    forceFocus,
+    isFocusBoundary,
+    extraProps,
+    preferredChildFocusKey,
+    onBlur,
+    autoRestoreFocus,
+    saveLastFocusedChild,
+    focusable,
+    focusBoundaryDirections,
+    onEnterRelease,
   } = props;
   const { ref, focusKey, focusSelf, hasFocusedChild } = useFocusable({
-    extraProps: { hello: "string" },
-    onEnterPress: onPress,
+    extraProps,
+    onEnterPress,
     trackChildren: true,
     onFocus,
+    focusKey: PropsFocusKey,
+    onBlur,
+    forceFocus,
+    focusable,
+    isFocusBoundary,
+    focusBoundaryDirections,
+    autoRestoreFocus,
+    onArrowPress,
+    onEnterRelease,
+    preferredChildFocusKey,
+    saveLastFocusedChild,
   });
 
   const [typeAttribute, setTypeAttribute] = useState<"text" | "password">(
@@ -55,8 +78,9 @@ const Input: FC<InputProps> = (props) => {
           label={label}
           placeholder={placeholder}
           error={error}
-          onPress={onPress}
+          onEnterPress={onEnterPress}
           type={typeAttribute}
+          onArrowPress={onArrowPress}
         />
         {password ? (
           <PasswordIcon type={typeAttribute} setType={changeTypeAtribute} />
@@ -77,4 +101,4 @@ type InputProps = {
   error?: boolean;
   usingFocusClassName?: boolean;
 } & DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
-  Focusable<object>;
+  UseFocusableConfig<object>;

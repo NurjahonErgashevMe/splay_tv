@@ -5,9 +5,9 @@ import s from "./button.module.scss";
 import cn from "classnames";
 import {
   FocusContext,
+  UseFocusableConfig,
   useFocusable,
 } from "@noriginmedia/norigin-spatial-navigation";
-import { Focusable } from "@/types/focusable";
 
 export const variants: Record<Variants, string> = {
   orange: s.orange,
@@ -29,26 +29,47 @@ export const focusedVariants: Record<FocusedVariants, string> = {
   unstyled: s.focusUnstyled,
 };
 
-export const Button: FC<ButtonProps> = ({
-  children,
-  className,
-  focusedVariant,
-  variant,
-  disabled,
-  focusedClassName,
-  onPress,
-  onFocus,
-  focusedSelf = false,
-  isFocusBoundary,
-  focusBoundaryDirections,
-  ...buttonProps
-}) => {
+export const Button: FC<ButtonProps> = (props) => {
+  const {
+    children,
+    variant,
+    disabled = false,
+    className,
+    focusedClassName,
+    onFocus,
+    onEnterPress,
+    onArrowPress,
+    focusKey: PropsFocusKey,
+    forceFocus,
+    isFocusBoundary,
+    extraProps,
+    preferredChildFocusKey,
+    onBlur,
+    autoRestoreFocus,
+    saveLastFocusedChild,
+    focusable,
+    focusBoundaryDirections,
+    onEnterRelease,
+    focusedVariant,
+    focusedSelf,
+    ...buttonProps
+  } = props;
+
   const { ref, focused, focusKey, focusSelf } = useFocusable({
     onFocus,
-    onEnterPress: onPress,
+    onEnterPress,
+    onArrowPress,
+    focusKey: PropsFocusKey,
+    forceFocus,
     isFocusBoundary,
+    extraProps,
+    preferredChildFocusKey,
+    onBlur,
+    autoRestoreFocus,
+    saveLastFocusedChild,
+    focusable,
     focusBoundaryDirections,
-    extraProps: { component: "button" },
+    onEnterRelease,
   });
 
   useEffect(() => {
@@ -101,4 +122,4 @@ export type ButtonProps = {
 } & Partial<
   DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 > &
-  Focusable<any, object>;
+  UseFocusableConfig<object>;

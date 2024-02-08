@@ -12,18 +12,18 @@ import {
 } from "@tabler/icons-react";
 import {
   FocusContext,
+  UseFocusableConfig,
   useFocusable,
 } from "@noriginmedia/norigin-spatial-navigation";
 import cn from "classnames";
 
 import { TLetter, letters } from "@/shared/letters";
 import { numbers } from "@/shared/numbers";
-import { Focusable } from "@/types/focusable";
 
 const MyKeyBoard: FC<KeyBoardProps> = memo(
   ({
     onFocus,
-    onPress,
+    onEnterPress,
     focusedSelf = false,
     onEnterPressed,
     isFocusBoundary,
@@ -53,12 +53,12 @@ const MyKeyBoard: FC<KeyBoardProps> = memo(
     const handlePress = useCallback(
       (letter: string | "del") => {
         if (letter === "del") {
-          return onPress?.({ letter: "del" }, { pressedKeys: {} });
+          return onEnterPress?.({ letter: "del" }, { pressedKeys: {} });
         }
         const letterWithCase = upperCase ? letter.toUpperCase() : letter;
-        return onPress?.({ letter: letterWithCase }, { pressedKeys: {} });
+        return onEnterPress?.({ letter: letterWithCase }, { pressedKeys: {} });
       },
-      [onPress, upperCase]
+      [onEnterPress, upperCase]
     );
     const handleEnter = useCallback(() => {
       onEnterPressed?.(true);
@@ -80,7 +80,7 @@ const MyKeyBoard: FC<KeyBoardProps> = memo(
                 className={s.button}
                 key={index}
                 focusedClassName={s.focused}
-                onPress={() => {
+                onEnterPress={() => {
                   if (typeof item !== "string") {
                     if (item.name === "CapsLock") {
                       handleCapsLock();
@@ -114,7 +114,7 @@ const MyKeyBoard: FC<KeyBoardProps> = memo(
               variant="dark"
               className={cn(s.button, s.letterToNumber)}
               focusedClassName={s.focused}
-              onPress={() =>
+              onEnterPress={() =>
                 setType((prev) => (prev === "letters" ? "number" : "letters"))
               }
             >
@@ -124,7 +124,7 @@ const MyKeyBoard: FC<KeyBoardProps> = memo(
               variant="dark"
               className={cn(s.button, s.prev)}
               focusedClassName={s.focused}
-              onPress={() => console.log("prev clicked")}
+              onEnterPress={() => console.log("prev clicked")}
             >
               <IconCaretLeftFilled className={s.prevIcon} />
             </Button>
@@ -132,7 +132,7 @@ const MyKeyBoard: FC<KeyBoardProps> = memo(
               variant="dark"
               className={cn(s.button, s.next)}
               focusedClassName={cn(s.focused, s.focusSvgFill)}
-              onPress={() => console.log("next clicked")}
+              onEnterPress={() => console.log("next clicked")}
             >
               <IconCaretRightFilled className={s.nextIcon} />
             </Button>
@@ -140,7 +140,7 @@ const MyKeyBoard: FC<KeyBoardProps> = memo(
               variant="dark"
               className={cn(s.button, s.space)}
               focusedClassName={s.focused}
-              onPress={() => handlePress(` `)}
+              onEnterPress={() => handlePress(` `)}
             >
               <IconSpace className={s.spaceIcon} />
             </Button>
@@ -148,7 +148,7 @@ const MyKeyBoard: FC<KeyBoardProps> = memo(
               variant="dark"
               className={s.button}
               focusedClassName={s.focused}
-              onPress={() => handlePress("-")}
+              onEnterPress={() => handlePress("-")}
             >
               -
             </Button>
@@ -156,7 +156,7 @@ const MyKeyBoard: FC<KeyBoardProps> = memo(
               variant="dark"
               className={s.button}
               focusedClassName={s.focused}
-              onPress={() => handlePress("_")}
+              onEnterPress={() => handlePress("_")}
             >
               _
             </Button>
@@ -164,7 +164,7 @@ const MyKeyBoard: FC<KeyBoardProps> = memo(
               variant="dark"
               className={cn(s.button, s.enter)}
               focusedClassName={s.focused}
-              onPress={handleEnter}
+              onEnterPress={handleEnter}
             >
               <IconArrowNarrowRight className={s.enterIcon} />
             </Button>
@@ -179,6 +179,6 @@ type KeyBoardProps = {
   onEnterPressed?: (entered: boolean) => void;
   focusedSelf?: boolean;
   className?: string;
-} & Focusable<{ letter: string }, object>;
+} & UseFocusableConfig<{ letter: string }>;
 
 export default MyKeyBoard;

@@ -66,7 +66,10 @@ const ConfirmPassword: FC = () => {
   return (
     <FocusContext.Provider value={focusKey}>
       <div className={s.confirmPassword} ref={ref}>
-        <GoToPrevious previous={"/register"} />
+        <GoToPrevious
+          outChildFocusKey="NUMBER_KEYBOARD_FOCUS_KEY"
+          previous={"/register"}
+        />
         <Center
           gap="1.625rem"
           justifyContent="space-between"

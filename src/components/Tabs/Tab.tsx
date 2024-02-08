@@ -6,10 +6,10 @@ import s from "./tabs.module.scss";
 
 import {
   FocusContext,
+  UseFocusableConfig,
   useFocusable,
 } from "@noriginmedia/norigin-spatial-navigation";
 
-import { Focusable } from "@/types/focusable";
 
 import { Center } from "../Center/Center";
 
@@ -18,7 +18,7 @@ import cn from "classnames";
 const Tab: FC<TabProps> = ({
   href,
   title,
-  onPress,
+  onEnterPress,
   focusedClassName,
   focusedSelf = false,
   className,
@@ -29,10 +29,10 @@ const Tab: FC<TabProps> = ({
   const { focusKey, focusSelf, focused, ref } = useFocusable<TTab>({
     extraProps: { href, title },
     onEnterPress: (props, details) => {
-      if (!onPress && href) {
+      if (!onEnterPress && href) {
         return navigate(href);
       }
-      onPress?.(props, details);
+      onEnterPress?.(props, details);
     },
   });
 
@@ -66,7 +66,7 @@ export type TTab = { title: string; href?: To; active?: boolean };
 export type TabProps = {
   focusedClassName?: string;
   focusedSelf?: boolean;
-} & Focusable<TTab> &
+} & UseFocusableConfig<TTab> &
   TTab &
   HTMLAttributes<HTMLDivElement>;
 

@@ -6,16 +6,15 @@ import Tab, { TTab, TabProps } from "./Tab";
 
 import {
   FocusContext,
+  UseFocusableConfig,
   useFocusable,
 } from "@noriginmedia/norigin-spatial-navigation";
-
-import { Focusable } from "@/types/focusable";
 
 import cn from "classnames";
 
 const Tabs: FC<TabsProps> = ({
   tabs,
-  onPress,
+  onEnterPress,
   childrenFocusedClassName,
   focusedClassName,
 }) => {
@@ -31,7 +30,7 @@ const Tabs: FC<TabsProps> = ({
             {...item}
             key={index}
             focusedClassName={childrenFocusedClassName}
-            onPress={onPress}
+            onEnterPress={onEnterPress}
           />
         ))}
       </div>
@@ -45,6 +44,6 @@ type TabsProps = {
   childrenFocusedClassName?: string;
   tabElementProps?: HTMLAttributes<HTMLDivElement>;
   elementProps?: HTMLAttributes<HTMLDivElement>;
-} & Focusable<TTab>;
+} & UseFocusableConfig<TTab>;
 
 export default Tabs;

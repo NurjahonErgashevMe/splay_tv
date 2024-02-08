@@ -4,16 +4,25 @@ import s from "../input.module.scss";
 import cn from "classnames";
 import {
   FocusContext,
+  UseFocusableConfig,
   useFocusable,
 } from "@noriginmedia/norigin-spatial-navigation";
-import { Focusable } from "@/types/focusable";
 
 const InputContent: FC<InputProps> = memo(
-  ({ error = false, placeholder, value, password, onPress, ...props }) => {
+  ({
+    error = false,
+    placeholder,
+    value,
+    password,
+    onEnterPress,
+    onArrowPress,
+    ...props
+  }) => {
     const { focusKey, focusSelf, ref } = useFocusable({
-      onEnterPress: onPress,
+      onEnterPress,
+      onArrowPress,
     });
-    
+
     useEffect(() => {
       if (password) {
         focusSelf();
@@ -41,6 +50,6 @@ type InputProps = HTMLProps<HTMLInputElement> & {
   password?: boolean;
   label: string;
   error?: boolean;
-} & Focusable<object>;
+} & UseFocusableConfig<object>;
 
 export default InputContent;
