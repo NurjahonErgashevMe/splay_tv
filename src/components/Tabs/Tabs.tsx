@@ -21,7 +21,6 @@ const Tabs: FC<TabsProps> = ({
   const { focusKey, ref, focused } = useFocusable({
     onFocus: (e) => console.log("focus", e),
   });
-  console.log(focused);
   return (
     <FocusContext.Provider value={focusKey}>
       <div className={cn(s.tabs, focused ? focusedClassName : null)} ref={ref}>

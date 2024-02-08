@@ -120,7 +120,7 @@ const ConfirmPassword: FC = () => {
           <div className={s.keyboard}>
             <NumberKeyboard
               onDeletePress={handleRemoveCode}
-              onPress={({ number }) => handleAddCode(number)}
+              onEnterPress={({ number }) => handleAddCode(number)}
               isFocusBoundary={!keyboardDisable}
               focusBoundaryDirections={["up"]}
               focusedSelf

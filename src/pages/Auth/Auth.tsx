@@ -33,7 +33,7 @@ const Auth: FC = () => {
         <Button
           variant="transparent"
           focusedVariant="orange"
-          onPress={handleModalOpen}
+          onEnterPress={handleModalOpen}
         >
           HELLO
         </Button>
@@ -43,14 +43,14 @@ const Auth: FC = () => {
           <Button
             variant="glass"
             focusedVariant="orange"
-            onPress={() => handleModalOpen(false)}
+            onEnterPress={() => handleModalOpen(false)}
           >
             HELLO
           </Button>
           <Button
             variant="glass"
             focusedVariant="orange"
-            onPress={() => handleModalOpen(false)}
+            onEnterPress={() => handleModalOpen(false)}
           >
             HELLO x2
           </Button>

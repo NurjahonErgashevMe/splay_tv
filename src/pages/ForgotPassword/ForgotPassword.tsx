@@ -88,10 +88,11 @@ const ForgotPassword: FC = () => {
               />
               <Button
                 disabled={!login}
+                ignore={!login}
                 className={s.button}
                 variant="black"
                 focusedVariant={!login ? "black" : "orange"}
-                onPress={navigateToConfirm}
+                onEnterPress={navigateToConfirm}
                 onFocus={() =>
                   onAssetFocus({ top: 0 } as FocusableComponentLayout)
                 }
@@ -109,7 +110,7 @@ const ForgotPassword: FC = () => {
               focusedSelf
               focusBoundaryDirections={["up"]}
               isFocusBoundary={!login}
-              onPress={(value) => {
+              onEnterPress={(value) => {
                 if (value?.letter === "del") {
                   changeLoginValue("del");
                 } else {

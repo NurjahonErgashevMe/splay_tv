@@ -55,7 +55,7 @@ const Guest: FC = () => {
               variant="orange"
               className={s.button}
               aria-label="Начать-смотреть"
-              onPress={onPressChanger}
+              onEnterPress={onPressChanger}
               focusedVariant="orange"
             >
               <IconPlayerPlayFilled

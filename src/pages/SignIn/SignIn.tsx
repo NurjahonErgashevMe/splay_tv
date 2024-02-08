@@ -182,8 +182,9 @@ const SignIn: FC = () => {
             <Button
               focusKey="SIGNIN_SIGNIN_BUTTON"
               variant="black"
-              focusedVariant={loginButtonDisable ? "black" : "orange"}
+              focusedVariant={ "orange"}
               disabled={loginButtonDisable}
+              ignore={loginButtonDisable}
               onArrowPress={(arrow) => focusPreviousComponent(arrow, "left")}
               onEnterPress={() => {
                 if (!loginButtonDisable) {
